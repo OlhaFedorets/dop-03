@@ -43,14 +43,16 @@ function App() {
 
     const addMoney = (banknote: BanknotsType) => {
         // Добавление денег сделаем в последнюю очередь, после настройки фильтров и отрисовки денег
+        const newMoney: MoneyType = {banknote, nominal: 100, id: v1()}
+        setMoney([...money, newMoney])
     }
 
     const removeMoney = (banknote: BanknotsType) => {
         // Снятие денег сделаем в последнюю очередь, после настройки фильтров и отрисовки денег
-       // const index = money.findIndex
-       //  if (index !== -1) {
-       //      setMoney(money.filter((el, i) => ...));
-       //  }
+       const index = money.findIndex(el=>el.banknote === banknote)
+        if (index !== -1) {
+            setMoney(money.filter((el, i) => i !== index));
+        }
     }
 
     return (
@@ -58,6 +60,8 @@ function App() {
             <Country
                 data={filteredMoney}   //отрисовать будем деньги после фильтрации
                 setFilterValue={setFilterValue}  //useState передаем? Так можно было?!
+                addMoney={addMoney}
+                removeMoney={removeMoney}
             />
         </div>
     );
