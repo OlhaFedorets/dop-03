@@ -6,9 +6,11 @@ import styled from "styled-components";
 type CountryPropsType = {
     data: MoneyType[]
     setFilterValue: (filterValue: BanknotsType) => void // давайте подумаем, setFilter -это грузчик, у которого всегда в руках товар
+    addMoney: (banknote: BanknotsType) => void
+    removeMoney: (banknote: BanknotsType) => void
   }
 
-export const Country = ({data, setFilterValue}: CountryPropsType) => {
+export const Country = ({data, setFilterValue, addMoney, removeMoney}: CountryPropsType) => {
     // с деструктуризацией пожалуйста
     const setAll=()=>{
         setFilterValue('All')// засетаем 'All'
@@ -22,12 +24,12 @@ export const Country = ({data, setFilterValue}: CountryPropsType) => {
         setFilterValue('RUB')// засетаем 'RUB'
     }
 
-   const addMoneyHandler=()=>{
-
+   const addMoneyHandler=(banknote: BanknotsType)=>{
+        addMoney(banknote)
    }
 
-   const removeMoneyHandler=()=>{
-
+   const removeMoneyHandler=(banknote: BanknotsType)=>{
+       removeMoney(banknote)
    }
 
     return (
@@ -39,10 +41,10 @@ export const Country = ({data, setFilterValue}: CountryPropsType) => {
             </div>
             <div>
                 {/*сделаем в последнюю очередь*/}
-                <button onClick={addMoneyHandler}>Положить 100$</button>
-                <button onClick={addMoneyHandler}>Положить 100р.</button>
-                <button onClick={removeMoneyHandler}>Снять 100$</button>
-                <button onClick={removeMoneyHandler}>Снять 100р.</button>
+                <button onClick={()=>addMoneyHandler('USD')}>Положить 100$</button>
+                <button onClick={()=>addMoneyHandler('RUB')}>Положить 100р.</button>
+                <button onClick={()=>removeMoneyHandler('USD')}>Снять 100$</button>
+                <button onClick={()=>removeMoneyHandler('RUB')}>Снять 100р.</button>
             </div>
             <City data={data}/>
         </Terminal>
